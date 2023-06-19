@@ -15,7 +15,8 @@ from pyzotero import zotero
 #url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
 
 
-sheet_url = "https://docs.google.com/spreadsheets/d/14EgPuHwmltEjWeFZfwygVKYwSlvYkG5yCv6IXquz2Os/edit#gid=1702410538"
+#sheet_url = "https://docs.google.com/spreadsheets/d/14EgPuHwmltEjWeFZfwygVKYwSlvYkG5yCv6IXquz2Os/edit#gid=1702410538"
+sheet_url = "https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/edit?resourcekey#gid=693684877"
 url_1 = sheet_url.replace('/edit#gid=', '/export?format=csv&gid=')
 
 # Convert data to pandas DataFrame
@@ -47,6 +48,7 @@ items_to_add = garticles.loc[garticles[g_doi_column].isin(dois_to_add)]
 
 collections = {
   "animals":{
+    "amphibians":"I5YWZIRR",
   "frog":"FKN3BCFK",
   "human":"6B6UBDAK",
   "mouse":"K93FPB4B",
