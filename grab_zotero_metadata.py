@@ -48,15 +48,26 @@ items_to_add = garticles.loc[garticles[g_doi_column].isin(dois_to_add)]
 
 collections = {
   "animals":{
+    "fish (cartilagenous & jawless)":"22IG9MCX",
+    "fish (teleosts)":"BB7H8KCR",
     "amphibians":"I5YWZIRR",
+    "reptiles":"W4T7HAGP",
+    "birds":,"ZRC54PQF",
+    
   "frog":"FKN3BCFK",
   "human":"6B6UBDAK",
   "mouse":"K93FPB4B",
   "non-human primate":"U39PBZ7C",
   "other":"WDSXVYN6",
+  "other rodent":"C9BWZ5BT"
   "rat":"T4AYDE66",
   "zebrafish":"33DJT8BK",
   "shark":"Z4IN47WJ"
+  },
+  method:{
+    "hardware":"",
+    "software":"",
+    "molecular":""
   },
   "pub":{
   "book":"IL925QCT",
@@ -147,6 +158,24 @@ for idx in items_to_add.index:
                 zot.addto_collection(collections["animals"]["zebrafish"],zot.item(entry_key))
             if animal=="shark":
                 zot.addto_collection(collections["animals"]["shark"],zot.item(entry_key))
+            
+            if animal=="fish (teleosts)":
+                zot.addto_collection(collections["animals"]["fish (teleosts)"],zot.item(entry_key))
+            if animal=="fish (cartilagenous & jawless)":
+                zot.addto_collection(collections["animals"]["fish (cartilagenous & jawless)"],zot.item(entry_key))
+            if animal=="amphibians":
+                zot.addto_collection(collections["animals"]["amphibians"],zot.item(entry_key))
+            if animal=="mammals (marsupials & monotremes)":
+                zot.addto_collection(collections["animals"]["mammals (marsupials & monotremes)"],zot.item(entry_key))
+            if animal=="mammals (placental)":
+                zot.addto_collection(collections["animals"]["mammals (placental)"],zot.item(entry_key))
+            if animal=="reptiles":
+                zot.addto_collection(collections["animals"]["reptiles"],zot.item(entry_key))
+
+
+
+
+            
             if animal!="frog" and \
                animal!="non-human primate"and \
                animal!="rat"and \
@@ -154,7 +183,16 @@ for idx in items_to_add.index:
                animal!="human" and\
                  animal!="chicken" and\
                 animal!="shark" and\
-               animal!="mouse":
+               animal!="mouse" and\
+               animal!="fish (teleosts)" and\
+               animal!="fish (cartilagenous & jawless)" and\
+               
+               animal!="amphibians" and\
+               animal!="reptiles" and\
+               animal!="birds" and\
+               animal!="mammals (marsupials & monotremes)" and\
+               
+               animal!="mammals (placental)" :
                 print(animal)
                 zot.addto_collection(collections["animals"]["other"],zot.item(entry_key))                
 
