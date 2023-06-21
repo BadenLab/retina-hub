@@ -31,7 +31,7 @@ library_id = "4584648"
 library_type = "group"
 #api_key = "your_zotero_api_key"
 zot = zotero.Zotero(library_id, library_type, api_key)
-zotero_group_items = zot.top(limit=100) # adjust limit as per your needs
+zotero_group_items = zot.top(limit=500) # adjust limit as per your needs
 
 # Extract DOIs from the zotero group
 zotero_dois = [item['data'].get('DOI', None) for item in zotero_group_items]
@@ -48,53 +48,51 @@ items_to_add = garticles.loc[garticles[g_doi_column].isin(dois_to_add)]
 
 collections = {
   "animals":{
-    "fish (cartilagenous & jawless)":"22IG9MCX",
-    "fish (teleosts)":"BB7H8KCR",
     "amphibians":"I5YWZIRR",
     "reptiles":"W4T7HAGP",
     "birds":,"ZRC54PQF",
-    
-  "frog":"FKN3BCFK",
-  "human":"6B6UBDAK",
-  "mouse":"K93FPB4B",
-  "non-human primate":"U39PBZ7C",
-  "other":"WDSXVYN6",
-  "other rodent":"C9BWZ5BT"
-  "rat":"T4AYDE66",
-  "zebrafish":"33DJT8BK",
-  "shark":"Z4IN47WJ"
+    "mammals: mouse":"JWRUTIIE",
+    "mammals: non-placental":"Z4IN47WJ",
+    "mammals: other placental":"MMU8BX4C",
+    "mammals: other rodent":"8A9R3YVS",
+    "mammals: primates":"HJ7UFULD",
+    "other":"WDSXVYN6",
+    "fish: any other":"V46CQ3NS",
+    "fish: zebrafish":"22IG9MCX",
+    "fish: other teleost":"BB7H8KCR",
   },
-  method:{
-    "hardware":"",
-    "software":"",
-    "molecular":""
-  },
+
   "pub":{
-  "book":"IL925QCT",
-  "other":"WACYJQPH",
-  "peer reviewed":"N3H5YAW3",
-  "preprint":"UAYZHHPY",
-  "review":"UF9V5CB6",
+    "book (peer reviewed)":"IL925QCT",
+    "other":"WACYJQPH",
+    "research article (peer reviewed)":"N3H5YAW3",
+    "preprint":"UAYZHHPY",
+    "dispatch or similar (not peer reviewed)":"PQQDDZX4",
+    "review (peer reviewed)":"UF9V5CB6",
   },
   "area":{
-  "computational":"QVN2AP8C",
-  "function":"ICYG3YV6",
-  "injury/disease":"NI8DPUXS",
-  "inner retina":"J5IMW5BP",
-  "molecular":"DUB5BNPW",
-  "organoid":"GBXAVJMW",
-  "other":"ZWVM2ZIS",
-  "outer retina":"D8SDAZI7",
-  "structure":"R5ZD6ZLM",
+    "computation":"QVN2AP8C",
+    "function":"ICYG3YV6",
+    "injury/disease/regeneration":"NI8DPUXS",
+    "organoid":"GBXAVJMW",
+    "other":"ZWVM2ZIS",
+    "tool development: biological":"WVKZJ7M5",
+    "tool development: hardware":"IFSBYJPB",
+    "tool development: software":"48T6FHZ2",
+    "structure":"R5ZD6ZLM",
   },
   "cell":{
-  "amacrine":"2ECXQ9WE",
-  "bipolar":"78A6KXVR",
-  "cones":"66QHAKSP",
-  "horizontal":"M6CLZYGV",
-  "other":"UZD6C2J9",
-  "retinal ganglion":"8QY5WMJH",
-  "rods":"4WMPKKHJ"
+    "amacrine":"2ECXQ9WE",
+    "bipolar":"78A6KXVR",
+    "cones":"66QHAKSP",
+    "horizontal":"M6CLZYGV",
+    "other":"UZD6C2J9",
+    "retinal ganglion":"8QY5WMJH",
+    "rods":"4WMPKKHJ",
+    "cortex and related":"BLSPC9W3",
+    "glia":"B9QIZAVV",
+    "superior colliculus/tectum":"J7U6BRBG",
+    "thalamus & related":"A8XHEV8F",
    }
   }
 
@@ -117,8 +115,8 @@ headers = {"content-type": "text/plain", "Accept-Charset": "UTF-8"}
 
 
 # now add entries to the zotero collection, add the type of OA to tags
-index=0
-#allMeta = list()
+
+
 
 
 
@@ -283,22 +281,4 @@ for idx in items_to_add.index:
 #    json.dump(allMeta, fid)
 
 
-"""
-with open(dataPath + "zotMeta.json", "r") as fid:
-    allMeta = json.load(fid)
- 
- #print(data)
 
-with open("zotero_api","r") as fid:
-    key = fid.readline()
-
-zot = zotero.Zotero(library_id=4584648,library_type='group', api_key=key)
-
-index=0
-for item in allMeta:
-    if item !="None":
-        index=index+1
-        zot.create_items(item)
-        #time.sleep(0.1)
-        print(index)
-"""
