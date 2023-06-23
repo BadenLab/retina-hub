@@ -48,6 +48,8 @@ items_to_add = garticles.loc[garticles[g_doi_column].isin(dois_to_add)]
 
 collections = {
   "animals":{
+    "cell culture":"",
+    "organoid":"",
     "amphibians":"I5YWZIRR",
     "reptiles":"W4T7HAGP",
     "birds":,"ZRC54PQF",
@@ -55,7 +57,8 @@ collections = {
     "mammals: non-placental":"Z4IN47WJ",
     "mammals: other placental":"MMU8BX4C",
     "mammals: other rodent":"8A9R3YVS",
-    "mammals: primates":"HJ7UFULD",
+    "mammals: human" : "",
+    "mammals: non-human primates":"HJ7UFULD",
     "other":"WDSXVYN6",
     "fish: any other":"V46CQ3NS",
     "fish: zebrafish":"22IG9MCX",
@@ -63,28 +66,32 @@ collections = {
   },
 
   "pub":{
-    "book (peer reviewed)":"IL925QCT",
+    "book chapter":"IL925QCT",
     "other":"WACYJQPH",
     "research article (peer reviewed)":"N3H5YAW3",
+    "resource / database":"",
+    "methods article (peer reviewed)":"N3H5YAW3",
     "preprint":"UAYZHHPY",
-    "dispatch or similar (not peer reviewed)":"PQQDDZX4",
+    "dispatch or similar":"PQQDDZX4",
     "review (peer reviewed)":"UF9V5CB6",
   },
   "area":{
     "computation":"QVN2AP8C",
     "function":"ICYG3YV6",
+    "structure":"R5ZD6ZLM",
+    "development":"",
     "injury/disease/regeneration":"NI8DPUXS",
-    "organoid":"GBXAVJMW",
+    "molecular":"",
     "other":"ZWVM2ZIS",
     "tool development: biological":"WVKZJ7M5",
     "tool development: hardware":"IFSBYJPB",
     "tool development: software":"48T6FHZ2",
-    "structure":"R5ZD6ZLM",
+
   },
   "cell":{
     "amacrine":"2ECXQ9WE",
     "bipolar":"78A6KXVR",
-    "cones":"66QHAKSP",
+    "photoreceptors":"66QHAKSP",
     "horizontal":"M6CLZYGV",
     "other":"UZD6C2J9",
     "retinal ganglion":"8QY5WMJH",
