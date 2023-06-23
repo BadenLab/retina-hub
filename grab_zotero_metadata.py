@@ -16,12 +16,12 @@ from pyzotero import zotero
 
 
 #sheet_url = "https://docs.google.com/spreadsheets/d/14EgPuHwmltEjWeFZfwygVKYwSlvYkG5yCv6IXquz2Os/edit#gid=1702410538"
-sheet_url = "https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/edit?resourcekey#gid=693684877"
-url_1 = sheet_url.replace('/edit#gid=', '/export?format=csv&gid=')
+#sheet_url = "https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/edit#gid=693684877"
+url_1 = "https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/export?format=csv&gid=693684877"
 
 # Convert data to pandas DataFrame
 garticles = pd.read_csv(url_1)
-
+print(garticles)
 # Step 2: Connect to Zotero
 
 with open("zotero_api","r") as fid:
@@ -36,7 +36,7 @@ zotero_group_items = zot.top(limit=500) # adjust limit as per your needs
 # Extract DOIs from the zotero group
 zotero_dois = [item['data'].get('DOI', None) for item in zotero_group_items]
 
-g_doi_column = 'Publication Identifier (DOI, ISBN, PMID, arXiv ID). If you do not know any of these for the entry, please use crossref search engine https://www.crossref.org/guestquery - use the subfield "search on article title")'
+g_doi_column = 'Identifier (DOI, ISBN, PMID, arXiv ID). If unknown, please query CrossRef: https://www.crossref.org/guestquery '
 # Step 3: Find the DOIs in the Google Sheet not in the Zotero group
 google_sheet_dois = garticles[g_doi_column].tolist()
 
@@ -49,7 +49,7 @@ items_to_add = garticles.loc[garticles[g_doi_column].isin(dois_to_add)]
 collections = {
   "animals":{
     "amphibian":"I5YWZIRR",
-    "bird":,"ZRC54PQF",
+    "bird":"ZRC54PQF",
     "cell culture":"KMUTY94V",
     "organoid":"BHNIC5FW",
     "fish: any other":"V46CQ3NS",
@@ -195,7 +195,7 @@ for idx in items_to_add.index:
                animal!="mammals: other rodent" and\
                animal!="mammals: human" and\
                animal!="mammals: non-human primate" and\
-               animal!="reptile" and\
+               animal!="reptile":
                 print(animal)
                 zot.addto_collection(collections["animals"]["other"],zot.item(entry_key))                
 
