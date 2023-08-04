@@ -4,28 +4,20 @@ Small script to load necessary libraries and match google scholar entries to Web
 import requests
 import pandas as pd
 from pyzotero import zotero
+import io
+import os
 #import json
 #import time
 
 
 
 
-#sheet_id = "14EgPuHwmltEjWeFZfwygVKYwSlvYkG5yCv6IXquz2Os"
-#sheet_name = "Form Responses 1"
-#url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
+
+sheet_url = "https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/export#gid=693684877"
+garticles = pd.read_excel(sheet_url,header=0)
 
 
-#sheet_url = "https://docs.google.com/spreadsheets/d/14EgPuHwmltEjWeFZfwygVKYwSlvYkG5yCv6IXquz2Os/edit#gid=1702410538"
-#sheet_url = "https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/edit#gid=693684877"
-sheet_url = 'https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/edit#gid=0'
-url1 = sheet_url.replace('/edit#gid=', '/export?format=csv&gid=')
 
-#url = "https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/export?format=csv&gid=693684877"
-curl
-# Convert data to pandas DataFrame
-#garticles = pd.read_csv("https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/export?format=csv",sep=",",index_col=0)
-garticles = pd.read_csv("~/Downloads/Retina_paper_entry_new (Responses) - Form Responses 1(1).csv")
-print(garticles)
 # Step 2: Connect to Zotero
 
 with open("zotero_api","r") as fid:
@@ -40,7 +32,7 @@ zotero_group_items = zot.top(limit=500) # adjust limit as per your needs
 # Extract DOIs from the zotero group
 zotero_dois = [item['data'].get('DOI', None) for item in zotero_group_items]
 
-g_doi_column = 'Identifier (DOI, ISBN, PMID, arXiv ID). If unknown, please query CrossRef: https://www.crossref.org/guestquery '
+g_doi_column = 'Identifier (DOI, ISBN, PMID, arXiv ID). If unknown, please query CrossRef: https://www.crossref.org/guestquery'
 # Step 3: Find the DOIs in the Google Sheet not in the Zotero group
 google_sheet_dois = garticles[g_doi_column].tolist()
 
@@ -180,7 +172,7 @@ for idx in items_to_add.index:
             if animal=="other":
                 zot.addto_collection(collections["animals"]["other"],zot.item(entry_key))
             if animal=="reptiles":
-                zot.addto_collection(collections["animals"]["reptiles"],zot.item(entry_key))
+                zot.addto_collection(collections["animals"]["reptile"],zot.item(entry_key))
 
 
 
