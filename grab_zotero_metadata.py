@@ -17,10 +17,14 @@ from pyzotero import zotero
 
 #sheet_url = "https://docs.google.com/spreadsheets/d/14EgPuHwmltEjWeFZfwygVKYwSlvYkG5yCv6IXquz2Os/edit#gid=1702410538"
 #sheet_url = "https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/edit#gid=693684877"
-url_1 = "https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/export?format=csv&gid=693684877"
+sheet_url = 'https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/edit#gid=0'
+url1 = sheet_url.replace('/edit#gid=', '/export?format=csv&gid=')
 
+#url = "https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/export?format=csv&gid=693684877"
+curl
 # Convert data to pandas DataFrame
-garticles = pd.read_csv(url_1)
+#garticles = pd.read_csv("https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/export?format=csv",sep=",",index_col=0)
+garticles = pd.read_csv("~/Downloads/Retina_paper_entry_new (Responses) - Form Responses 1(1).csv")
 print(garticles)
 # Step 2: Connect to Zotero
 
@@ -141,7 +145,7 @@ for idx in items_to_add.index:
         entry_key = result["successful"]["0"]["key"]
 
         #animal species
-        species = items_to_add.loc[idx]["Species/tissue"]
+        species = items_to_add.loc[idx]["Species / tissue"]
         species = species.split(",")
         for animal in species:
             animal = animal.lower().strip()
