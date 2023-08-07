@@ -9,39 +9,6 @@ import os
 #import json
 #import time
 
-
-
-
-
-sheet_url = "https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/export#gid=693684877"
-garticles = pd.read_excel(sheet_url,header=0)
-
-
-
-# Step 2: Connect to Zotero
-
-with open("zotero_api","r") as fid:
-    api_key = fid.readline()
-
-library_id = "4584648"
-library_type = "group"
-#api_key = "your_zotero_api_key"
-zot = zotero.Zotero(library_id, library_type, api_key)
-zotero_group_items = zot.top(limit=500) # adjust limit as per your needs
-
-# Extract DOIs from the zotero group
-zotero_dois = [item['data'].get('DOI', None) for item in zotero_group_items]
-
-g_doi_column = 'Identifier (DOI, ISBN, PMID, arXiv ID). If unknown, please query CrossRef: https://www.crossref.org/guestquery'
-# Step 3: Find the DOIs in the Google Sheet not in the Zotero group
-google_sheet_dois = garticles[g_doi_column].tolist()
-
-dois_to_add = list(set(google_sheet_dois) - set(zotero_dois))
-
-items_to_add = garticles.loc[garticles[g_doi_column].isin(dois_to_add)]
-
-# Step 4: Add these papers to Zotero subgroups
-
 collections = {
   "animals":{
     "amphibian":"I5YWZIRR",
@@ -85,20 +52,48 @@ collections = {
 
   },
   "cell":{
-    "amacrine":"2ECXQ9WE",
-    "bipolar":"78A6KXVR",
-    "cortex and related":"BLSPC9W3",
-    "glia":"B9QIZAVV",
-    "horizontal":"M6CLZYGV",
-    "other":"UZD6C2J9",
-    "photoreceptors":"66QHAKSP",
-    "retinal ganglion":"8QY5WMJH",
-    "superior colliculus/tectum":"J7U6BRBG",
-    "thalamus and related":"A8XHEV8F",
+    "Amacrine cells":"2ECXQ9WE",
+    "Bipolar cells":"78A6KXVR",
+    "Cortex and related":"BLSPC9W3",
+    "Glia":"B9QIZAVV",
+    "Horizontal cells":"M6CLZYGV",
+    "Other":"UZD6C2J9",
+    "Photoreceptors":"66QHAKSP",
+    "Ganglion cells":"8QY5WMJH",
+    "Superior colliculus/tectum and related":"J7U6BRBG",
+    "Thalamus and related":"A8XHEV8F",
    }
   }
 
-#dois = articles.iloc[:,3]
+
+sheet_url = "https://docs.google.com/spreadsheets/d/15jE_Hc_otR_OvAkRy_aseGhCaO7c29M8DKyNuso6dyU/export#gid=693684877"
+garticles = pd.read_excel(sheet_url,header=0)
+
+
+
+# Step 2: Connect to Zotero
+
+with open("zotero_api","r") as fid:
+    api_key = fid.readline()
+
+library_id = "4584648"
+library_type = "group"
+#api_key = "your_zotero_api_key"
+zot = zotero.Zotero(library_id, library_type, api_key)
+zotero_group_items = zot.top(limit=500) # adjust limit as per your needs
+
+# Extract DOIs from the zotero group
+zotero_dois = [item['data'].get('DOI', None) for item in zotero_group_items]
+
+g_doi_column = 'Identifier (DOI, ISBN, PMID, arXiv ID). If unknown, please query CrossRef: https://www.crossref.org/guestquery'
+# Step 3: Find the DOIs in the Google Sheet not in the Zotero group
+google_sheet_dois = garticles[g_doi_column].tolist()
+
+dois_to_add = list(set(google_sheet_dois) - set(zotero_dois))
+
+items_to_add = garticles.loc[garticles[g_doi_column].isin(dois_to_add)]
+
+# Step 4: Add these papers to Zotero subgroups
 
 
 
@@ -116,12 +111,9 @@ headers = {"content-type": "text/plain", "Accept-Charset": "UTF-8"}
 # r = requests.post(url=url, data=dois[0], headers=headers)
 
 
+
+
 # now add entries to the zotero collection, add the type of OA to tags
-
-
-
-
-
 for idx in items_to_add.index:
     if str(items_to_add.loc[idx][g_doi_column])!="nan":
         print(idx)
@@ -175,9 +167,6 @@ for idx in items_to_add.index:
                 zot.addto_collection(collections["animals"]["reptile"],zot.item(entry_key))
 
 
-
-
-            
             if animal!="amphibian" and \
                animal!="bird"and \
                animal!="cell culture"and \
@@ -268,6 +257,7 @@ for idx in items_to_add.index:
         cell_type = cell_type.split(",")
         for cell in cell_type :
             cell = cell.lower().strip()
+            print(cell)
             if cell=="amacrine cells":
                 zot.addto_collection(collections["cell"]["Amacrine cells"],zot.item(entry_key))       
             if cell=="bipolar cells":
@@ -279,7 +269,9 @@ for idx in items_to_add.index:
             if cell=="photoreceptors":
                 zot.addto_collection(collections["cell"]["Photoreceptors"],zot.item(entry_key))       
             if cell=="ganglion cells":
-                zot.addto_collection(collections["cell"]["Retinal ganglion"],zot.item(entry_key))       
+                zot.addto_collection(collections["cell"]["Ganglion cells"],zot.item(entry_key))       
+            if cell=="glia":
+                zot.addto_collection(collections["cell"]["Glia"],zot.item(entry_key))       
             if cell=="superior colliculus/tectum and related":
                 zot.addto_collection(collections["cell"]["Superior colliculus/tectum"],zot.item(entry_key))       
             if cell=="thalamus and related":
@@ -291,12 +283,13 @@ for idx in items_to_add.index:
                 cell!="horizontal cells" and\
                 cell!="photoreceptors" and\
                 cell !="ganglion cells" and\
+                cell !="glia" and\
                 cell!="superior colliculus/tectum and related" and\
                 cell!="thalamus and related" :
                 print(cell)
-                zot.addto_collection(collections["cell"]["other"],zot.item(entry_key))       
+                zot.addto_collection(collections["cell"]["Other"],zot.item(entry_key))       
                 
-
+    #other
 
 #with open(dataPath + "zotMeta.json", "w") as fid:
 #    json.dump(allMeta, fid)
