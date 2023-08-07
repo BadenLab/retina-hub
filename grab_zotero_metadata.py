@@ -268,29 +268,30 @@ for idx in items_to_add.index:
         cell_type = cell_type.split(",")
         for cell in cell_type :
             cell = cell.lower().strip()
-            if cell=="amacrine":
-                zot.addto_collection(collections["cell"]["amacrine"],zot.item(entry_key))       
-            if cell=="bipolar":
-                zot.addto_collection(collections["cell"]["bipolar"],zot.item(entry_key))       
+            if cell=="amacrine cells":
+                zot.addto_collection(collections["cell"]["Amacrine cells"],zot.item(entry_key))       
+            if cell=="bipolar cells":
+                zot.addto_collection(collections["cell"]["Bipolar cells"],zot.item(entry_key))       
             if cell=="cortex and related":
-                zot.addto_collection(collections["cell"]["cortex and related"],zot.item(entry_key))       
-            if cell=="horizontal":
-                zot.addto_collection(collections["cell"]["horizontal"],zot.item(entry_key))       
+                zot.addto_collection(collections["cell"]["Cortex and related"],zot.item(entry_key))       
+            if cell=="horizontal cells":
+                zot.addto_collection(collections["cell"]["Horizontal cells"],zot.item(entry_key))       
             if cell=="photoreceptors":
-                zot.addto_collection(collections["cell"]["photoreceptors"],zot.item(entry_key))       
-            if cell=="retinal ganglion":
-                zot.addto_collection(collections["cell"]["retinal ganglion"],zot.item(entry_key))       
-            if cell=="superior colliculus/tectum":
-                zot.addto_collection(collections["cell"]["superior colliculus/tectum"],zot.item(entry_key))       
+                zot.addto_collection(collections["cell"]["Photoreceptors"],zot.item(entry_key))       
+            if cell=="ganglion cells":
+                zot.addto_collection(collections["cell"]["Retinal ganglion"],zot.item(entry_key))       
+            if cell=="superior colliculus/tectum and related":
+                zot.addto_collection(collections["cell"]["Superior colliculus/tectum"],zot.item(entry_key))       
             if cell=="thalamus and related":
-                zot.addto_collection(collections["cell"]["thalamus and related"],zot.item(entry_key))       
-            if cell!="amacrine" and \
-                cell!="bipolar" and \
+                zot.addto_collection(collections["cell"]["Thalamus and related"],zot.item(entry_key))       
+
+            if cell!="amacrine cells" and \
+                cell!="bipolar cells" and \
                 cell!="cortex and related" and\
-                cell!="horizontal" and\
+                cell!="horizontal cells" and\
                 cell!="photoreceptors" and\
-                cell !="retinal ganglion" and\
-                cell!="superior colliculus/tectum" and\
+                cell !="ganglion cells" and\
+                cell!="superior colliculus/tectum and related" and\
                 cell!="thalamus and related" :
                 print(cell)
                 zot.addto_collection(collections["cell"]["other"],zot.item(entry_key))       
