@@ -75,6 +75,7 @@ garticles = pd.read_excel(sheet_url,header=0)
 
 with open("zotero_api","r") as fid:
     api_key = fid.readline()
+    api_key=api_key[:-1]
 
 library_id = "4584648"
 library_type = "group"
@@ -105,8 +106,8 @@ items_to_add = garticles.loc[garticles[g_doi_column].isin(dois_to_add)]
 
 #KPVJRAE9:14:Animal model;I2DXCS7M:11:Publication type;NC2HRG88:12:Main Areas;BXSDS9PK:13:Cell types
 
-url = "http://127.0.0.1:1969/search"  # zotero translator server running locally
-#url = "https://zotero.retina-hub.org:1969/search"
+url = "http://127.0.0.1:1969"  # zotero translator server running locally
+#url = "https://zotero.retina-hub.org/search"
 headers = {"content-type": "text/plain", "Accept-Charset": "UTF-8"}
 # r = requests.post(url=url, data=dois[0], headers=headers)
 
@@ -117,7 +118,11 @@ headers = {"content-type": "text/plain", "Accept-Charset": "UTF-8"}
 for idx in items_to_add.index:
     if str(items_to_add.loc[idx][g_doi_column])!="nan":
         print(idx)
-        r = requests.post(url=url, data=items_to_add.loc[idx][g_doi_column], headers=headers)
+        entry = items_to_add.loc[idx][g_doi_column]
+        #correct for wrong entries that have "https://doi.org/ starting the DOI"
+        if entry.find("https://doi.org/")==0:
+            entry=entry[len("https://doi.org/"):]
+        r = requests.post(url=url, data=entry, headers=headers)
         temp = r.json()
          
         r.close()
